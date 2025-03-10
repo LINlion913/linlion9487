@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>巨鯨行為判斷</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        h2 {
+            color: #333;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .option {
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>巨鯨行為判斷</h2>
+
+        <!-- 籌碼集中度選擇 -->
+        <div class="section">
+            <h3>請選擇籌碼集中度</h3>
+            <form id="chipForm">
+                <div class="option">
+                    <input type="radio" name="chip" value="綠柱增加" id="chip1" required>
+                    <label for="chip1">籌碼集中度綠柱增加</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="chip" value="綠柱減少" id="chip2">
+                    <label for="chip2">籌碼集中度綠柱減少</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="chip" value="紅柱增加" id="chip3">
+                    <label for="chip3">籌碼集中度紅柱增加</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="chip" value="紅柱減少" id="chip4">
+                    <label for="chip4">籌碼集中度紅柱減少</label>
+                </div>
+            </form>
+        </div>
+
+        <!-- 巨鯨警報選擇 -->
+        <div class="section">
+            <h3>請選擇巨鯨警報</h3>
+            <form id="whaleForm">
+                <div class="option">
+                    <input type="radio" name="whale" value="綠柱增加" id="whale1" required>
+                    <label for="whale1">巨鯨警報綠柱增加</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="whale" value="綠柱減少" id="whale2">
+                    <label for="whale2">巨鯨警報綠柱減少</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="whale" value="紅柱增加" id="whale3">
+                    <label for="whale3">巨鯨警報紅柱增加</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="whale" value="紅柱減少" id="whale4">
+                    <label for="whale4">巨鯨警報紅柱減少</label>
+                </div>
+            </form>
+        </div>
+
+        <!-- 確定按鈕與結果顯示 -->
+        <button onclick="calculateResult()">確定</button>
+        <!-- <button onclick="resetForm()">重置</button> -->
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // 定義巨鯨行為映射表
+        const behaviorMap = {
+            "綠柱增加": {
+                "綠柱增加": "做多",
+                "綠柱減少": "平空",
+                "紅柱增加": "平空",
+                "紅柱減少": "做多"
+            },
+            "綠柱減少": {
+                "綠柱增加": "做空",
+                "綠柱減少": "平多",
+                "紅柱增加": "平多",
+                "紅柱減少": "做空"
+            },
+            "紅柱增加": {
+                "綠柱增加": "做多",
+                "綠柱減少": "平多",
+                "紅柱增加": "平多",
+                "紅柱減少": "做空"
+            },
+            "紅柱減少": {
+                "綠柱增加": "做多",
+                "綠柱減少": "平空",
+                "紅柱增加": "平空",
+                "紅柱減少": "做多"
+            }
+        };
+
+        // 計算並顯示結果
+        function calculateResult() {
+            const chipForm = document.getElementById("chipForm");
+            const whaleForm = document.getElementById("whaleForm");
+
+            // 檢查籌碼集中度選擇
+            const selectedChip = chipForm.querySelector('input[name="chip"]:checked');
+            if (!selectedChip) {
+                alert("請選擇一個籌碼集中度選項！");
+                return;
+            }
+            const chipConcentration = selectedChip.value;
+
+            // 檢查巨鯨警報選擇
+            const selectedWhale = whaleForm.querySelector('input[name="whale"]:checked');
+            if (!selectedWhale) {
+                alert("請選擇一個巨鯨警報選項！");
+                return;
+            }
+            const whaleAlert = selectedWhale.value;
+
+            // 計算並顯示結果
+            const behavior = behaviorMap[chipConcentration][whaleAlert];
+            document.getElementById("result").innerText = `巨鯨行為：${behavior}`;
+
+            //添加重置功能
+            function resetForm() {
+                document.getElementById("chipForm").reset();
+                document.getElementById("whaleForm").reset();
+                document.getElementById("result").innerText = "";
+            }
+        }
+    </script>
+</body>
+</html>
