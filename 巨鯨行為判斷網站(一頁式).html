@@ -12,7 +12,7 @@
             background-color: #f0f0f0;
         }
         .container {
-            background-color: white;
+            background-color: gray;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -139,7 +139,7 @@
             // 檢查籌碼集中度選擇
             const selectedChip = chipForm.querySelector('input[name="chip"]:checked');
             if (!selectedChip) {
-                alert("請選擇一個籌碼集中度選項！");
+                alert("請選擇一個籌碼集中度選項！",color:red);
                 return;
             }
             const chipConcentration = selectedChip.value;
@@ -147,7 +147,7 @@
             // 檢查巨鯨警報選擇
             const selectedWhale = whaleForm.querySelector('input[name="whale"]:checked');
             if (!selectedWhale) {
-                alert("請選擇一個巨鯨警報選項！");
+                alert("請選擇一個巨鯨警報選項！",color:red);
                 return;
             }
             const whaleAlert = selectedWhale.value;
@@ -157,10 +157,11 @@
             document.getElementById("result").innerText = `巨鯨行為：${behavior}`;
 
             //添加重置功能
-            function resetForm() {
-                document.getElementById("chipForm").reset();
+           /*function resetForm() {
+               document.getElementById("chipForm").reset();
                 document.getElementById("whaleForm").reset();
                 document.getElementById("result").innerText = "";
+                */
             }
         }
     </script>
